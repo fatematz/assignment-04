@@ -86,3 +86,126 @@ function toggleStyle(id) {
 
     updateCounts()
 }
+
+mainContainer.addEventListener("click", function(even) {
+
+    const card=even.target.closest('.card');
+
+    if(even.target.classList.contains('interview-btn')) {
+        updateJobStatus( card, 'interview' )
+    };
+
+    if(even.target.classList.contains('rejected-btn')) {
+        updateJobStatus( card, 'rejected' )
+    };
+
+    if(even.target.closest('.delete-btn')) {
+        deleteJob(card)
+        updateCounts()
+    }
+})
+
+function updateJobStatus (card, cardStatus) {
+        const title = card.querySelector('.title').innerText
+        const position = card.querySelector('.position').innerText
+        const type = card.querySelector('.type').innerText
+        // const status = card.querySelector('.status').innerText
+        const build = card.querySelector('.build').innerText
+
+        const job = {
+            title,
+            position,
+            type,
+            status: cardStatus,
+            build
+        }
+
+    interviews=interviews.filter(item =>  item.title!==title);
+    rejected=rejected.filter(item => item.title!==title);
+
+    if(cardStatus==='interview') {
+        interviews.push(job)
+        interviewCount.innerText=interviews.length;
+        card.querySelector('.status-1').innerText='interview'
+        // renderJob('interview')
+
+        updateCounts()
+    }
+
+     if(cardStatus==='rejected') {
+        rejected.push(job)
+        rejectedCount.innerText=rejected.length;
+        card.querySelector('.status-1').innerText='rejected'
+         // renderJob('rejected' )
+         
+         updateCounts()
+    }
+
+    if(activeFilter==='interview') {
+        if(interviews.length===0) {
+            showEmptyCard()
+        } else {
+            renderJob('interview')
+        }
+    }
+
+    if(activeFilter==='rejected') {
+        if(rejected.length===0) {
+            showEmptyCard()
+        } else {
+            renderJob('rejected')
+        }
+    }
+}
+
+function renderJob( status ) {
+    filterSection.innerHTML=''
+
+    let data=[];
+
+    if(status==='interview') {
+        data=interviews;
+    } else if(status==='rejected') {
+        data = rejected
+    }
+
+    for(let item of data) {
+
+            let statusColor = item.status === 'interview' ? 'bg-green-100 text-green-700'  : 'bg-red-100 text-red-700'
+
+        let div=document.createElement('div')
+        div.className =
+            'flex justify-between bg-[#ffffff] shadow-2xl p-10 rounded-2xl card'
+        
+        div.innerHTML = `<div class="space-y-8">
+                        <div class="">
+                            <h3 class="mobile-1 text-[20px] font-bold title">${item.title}</h3>
+                            <p class="react-1 position text-[#64748B]">${item.position}</p>
+                        </div>
+
+                        <div class="text-[#64748B] type">
+                            <p class="remote-1">${item.type}</p>
+                        </div>
+
+                        <div class="">
+                        <p class="status-1 status text-[18px] w-[120px] text-center p-[5px] ${statusColor}"> ${item.status} </p>
+                        </div>
+
+                        <div class="">
+                            <p class="build build-1 text-[#64748B]">${item.build}</p>
+                        </div>
+
+                        <div class="flex gap-5 ">
+                            <button id="interview-btn" class="interview-btn text-green-500 text-[20px] p-2 border-2 border-green-500 rounded-lg"">interview</button>
+                            <button id="rejected-btn" class="rejected-btn text-[20px] p-2 border-2 border-red-500 text-red-500 rounded-lg">Rejected</button>
+                        </div>
+                    </div>
+
+                    <div class="p-2.5 bg-[#cecfd1] h-10 rounded-full ">
+                        <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    `
+        
+        filterSection.appendChild(div)
+    }
+}
