@@ -48,6 +48,22 @@
             <hr class="my-5 border-2  text-[#E6E7E9]">
         </header>
 
+         <main id="main-container" class="max-w-[1100px] mx-auto px-5 sm:px-4">
+            <div class="flex justify-between items-center">
+                <h2 class="available-jobs text-[25px] font-black">Available Jobs</h2>
+                <p id="jobs" class="8-jobs-1">8 jobs</p>
+            </div>
+            
+            <div class="flex gap-3 my-6 md-0 sm:mb-0 flex-wrap"> 
+                <button onclick="toggleStyle('allBtn')" id="allBtn" class="bg-blue-500 px-5 py-2 text-white text-[16px] sm:text-[20px] rounded-2xl">All</button> 
+                <button onclick="toggleStyle('interviewBtn')" id="interviewBtn" class="px-5 py-2 bg-[#ffffff] shadow-2xl text-[16px] sm:text-[20px] rounded-2xl">Interview</button> 
+                <button onclick="toggleStyle('rejectedBtn')" id="rejectedBtn" class="px-5 py-2 bg-[#ffffff] shadow-2xl text-[16px] sm:text-[20px] rounded-2xl">Rejected</button>
+            </div>
+
+            <!-- Filter Card  -->
+            <section id="filtered-section" class="space-y-10 my-[60px] hidden"></section>
+        </main>
+
         <script src="script.js"></script>
     </body>
 
