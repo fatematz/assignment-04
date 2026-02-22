@@ -242,3 +242,51 @@ function deleteJob(card) {
         }
     }
 }
+
+function deleteJob(card) {
+
+    const title = card.querySelector('.title').innerText
+
+    // remove from both arrays
+    interviews = interviews.filter(item => item.title !== title)
+    rejected=rejected.filter(item => item.title!==title)
+    
+    updateCounts()
+
+    interviewCount.innerText = interviews.length
+    rejectedCount.innerText = rejected.length
+
+    // remove DOM card
+    card.remove()
+  
+    if(activeFilter === 'interview') {
+        if(interviews.length === 0) {
+            showEmptyCard()
+        } else {
+            renderJob('interview')
+        }
+    }
+
+    if(activeFilter === 'rejected') {
+        if(rejected.length === 0) {
+            showEmptyCard()
+        } else {
+            renderJob('rejected')
+        }
+    }
+}
+
+function updateCounts() {
+    total.innerText = allCardSection.children.length
+
+    interviewCount.innerText = interviews.length
+    rejectedCount.innerText = rejected.length
+
+    if(activeFilter === 'interview') {
+        jobs.innerText = interviews.length + ' of ' + jobsLength + ' jobs'
+    } else if(activeFilter === 'rejected') {
+        jobs.innerText = rejected.length + ' of ' + jobsLength + ' jobs'
+    } else {
+        jobs.innerText = jobsLength + ' jobs'
+    }
+}
