@@ -2,18 +2,18 @@ let total = document.getElementById('totalCount')
 let interviewCount = document.getElementById('interviewCount')
 let rejectedCount = document.getElementById('rejectedCount')
 
-let interviews=[];
-let rejected=[];
+let interviews = []
+let rejected = []
 
-let mainContainer=document.querySelector('#main-container')
+let mainContainer = document.querySelector('#main-container')
 const allCardSection = document.getElementById('allCards')
 let filterSection = document.getElementById('filtered-section')
-let jobs=document.getElementById('jobs')
-let jobsLength=allCardSection.children.length;
+let jobs = document.getElementById('jobs')
+let jobsLength = allCardSection.children.length
 
 jobs.innerText = jobsLength + ' jobs'
-interviewCount.innerText=interviews.length;
-rejectedCount.innerText=rejected.length;
+interviewCount.innerText = interviews.length
+rejectedCount.innerText = rejected.length
 
 function countTotal() {
     total.innerText = allCardSection.children.length
@@ -25,12 +25,12 @@ const allFilterBtn = document.getElementById('allBtn')
 const interviewFilterBtn = document.getElementById('interviewBtn')
 const rejectedFilterBtn = document.getElementById('rejectedBtn')
 
-function showEmptyCard () {
-    const emptyCard=`<div class="empty-card"><img src="./jobs.png"/><h3>No jobs available</h3><p>Check back soon for new job opportunities</p></div>`
-    document.getElementById('filtered-section').innerHTML=emptyCard
+function showEmptyCard() {
+    const emptyCard = `<div class="empty-card"><img src="./jobs.png"/><h3>No jobs available</h3><p>Check back soon for new job opportunities</p></div>`
+    document.getElementById('filtered-section').innerHTML = emptyCard
 }
 
-let activeFilter='all'
+let activeFilter = 'all'
 
 function toggleStyle(id) {
     allFilterBtn.classList.remove('bg-blue-500', 'text-white')
@@ -47,110 +47,105 @@ function toggleStyle(id) {
     selected.classList.add('bg-black', 'text-white')
     // selected.addEventListener
 
-    
-
-    if(id=="interviewBtn") {
-        allCardSection.classList.add('hidden');
+    if (id == 'interviewBtn') {
+        allCardSection.classList.add('hidden')
         filterSection.classList.remove('hidden')
-        jobs.innerText=interviews.length+' of '+jobsLength+' jobs'
+        jobs.innerText = interviews.length + ' of ' + jobsLength + ' jobs'
 
         activeFilter = 'interview'
-        
-        if(interviews.length==0) {
+
+        if (interviews.length == 0) {
             showEmptyCard()
-            return;
+            return
         }
 
-        renderJob('interview');
-
-    } else if(id=="rejectedBtn") {
-        allCardSection.classList.add('hidden');
+        renderJob('interview')
+    } else if (id == 'rejectedBtn') {
+        allCardSection.classList.add('hidden')
         filterSection.classList.remove('hidden')
-        jobs.innerText=rejected.length+' of '+jobsLength+' jobs'
+        jobs.innerText = rejected.length + ' of ' + jobsLength + ' jobs'
 
         activeFilter = 'rejected'
 
-        if(rejected.length==0) {
+        if (rejected.length == 0) {
             showEmptyCard()
-            return;
+            return
         }
 
-         renderJob('rejected');
+        renderJob('rejected')
     } else {
+        activeFilter = 'all'
 
-        activeFilter='all'
-        
-        allCardSection.classList.remove('hidden');
+        allCardSection.classList.remove('hidden')
         filterSection.classList.add('hidden')
     }
 
     updateCounts()
 }
 
-mainContainer.addEventListener("click", function(even) {
+mainContainer.addEventListener('click', function (even) {
+    const card = even.target.closest('.card')
 
-    const card=even.target.closest('.card');
+    if (even.target.classList.contains('interview-btn')) {
+        updateJobStatus(card, 'interview')
+    }
 
-    if(even.target.classList.contains('interview-btn')) {
-        updateJobStatus( card, 'interview' )
-    };
+    if (even.target.classList.contains('rejected-btn')) {
+        updateJobStatus(card, 'rejected')
+    }
 
-    if(even.target.classList.contains('rejected-btn')) {
-        updateJobStatus( card, 'rejected' )
-    };
-
-    if(even.target.closest('.delete-btn')) {
+    if (even.target.closest('.delete-btn')) {
         deleteJob(card)
         updateCounts()
     }
 })
 
-function updateJobStatus (card, cardStatus) {
-        const title = card.querySelector('.title').innerText
-        const position = card.querySelector('.position').innerText
-        const type = card.querySelector('.type').innerText
-        // const status = card.querySelector('.status').innerText
-        const build = card.querySelector('.build').innerText
+function updateJobStatus(card, cardStatus) {
+    const title = card.querySelector('.title').innerText
+    const position = card.querySelector('.position').innerText
+    const type = card.querySelector('.type').innerText
+    // const status = card.querySelector('.status').innerText
+    const build = card.querySelector('.build').innerText
 
-        const job = {
-            title,
-            position,
-            type,
-            status: cardStatus,
-            build
-        }
+    const job = {
+        title,
+        position,
+        type,
+        status: cardStatus,
+        build,
+    }
 
-    interviews=interviews.filter(item =>  item.title!==title);
-    rejected=rejected.filter(item => item.title!==title);
+    interviews = interviews.filter((item) => item.title !== title)
+    rejected = rejected.filter((item) => item.title !== title)
 
-    if(cardStatus==='interview') {
+    if (cardStatus === 'interview') {
         interviews.push(job)
-        interviewCount.innerText=interviews.length;
-        card.querySelector('.status-1').innerText='interview'
+        interviewCount.innerText = interviews.length
+        card.querySelector('.status-1').innerText = 'interview'
         // renderJob('interview')
 
         updateCounts()
     }
 
-     if(cardStatus==='rejected') {
+    if (cardStatus === 'rejected') {
         rejected.push(job)
-        rejectedCount.innerText=rejected.length;
-        card.querySelector('.status-1').innerText='rejected'
-         // renderJob('rejected' )
-         
-         updateCounts()
+        rejectedCount.innerText = rejected.length
+        card.querySelector('.status-1').innerText = 'rejected'
+        // renderJob('rejected' )
+
+        updateCounts()
     }
 
-    if(activeFilter==='interview') {
-        if(interviews.length===0) {
+    if (activeFilter === 'interview') {
+        if (interviews.length === 0) {
             showEmptyCard()
         } else {
             renderJob('interview')
         }
     }
 
-    if(activeFilter==='rejected') {
-        if(rejected.length===0) {
+    if (activeFilter === 'rejected') {
+        if (rejected.length === 0) {
             showEmptyCard()
         } else {
             renderJob('rejected')
@@ -158,25 +153,27 @@ function updateJobStatus (card, cardStatus) {
     }
 }
 
-function renderJob( status ) {
-    filterSection.innerHTML=''
+function renderJob(status) {
+    filterSection.innerHTML = ''
 
-    let data=[];
+    let data = []
 
-    if(status==='interview') {
-        data=interviews;
-    } else if(status==='rejected') {
+    if (status === 'interview') {
+        data = interviews
+    } else if (status === 'rejected') {
         data = rejected
     }
 
-    for(let item of data) {
+    for (let item of data) {
+        let statusColor =
+            item.status === 'interview'
+                ? 'bg-green-100 text-green-700'
+                : 'bg-red-100 text-red-700'
 
-            let statusColor = item.status === 'interview' ? 'bg-green-100 text-green-700'  : 'bg-red-100 text-red-700'
-
-        let div=document.createElement('div')
+        let div = document.createElement('div')
         div.className =
             'flex justify-between bg-[#ffffff] shadow-2xl p-10 rounded-2xl card'
-        
+
         div.innerHTML = `<div class="space-y-8">
                         <div class="">
                             <h3 class="mobile-1 text-[20px] font-bold title">${item.title}</h3>
@@ -205,19 +202,18 @@ function renderJob( status ) {
                         <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     `
-        
+
         filterSection.appendChild(div)
     }
 }
 
 function deleteJob(card) {
-
     const title = card.querySelector('.title').innerText
 
     // remove from both arrays
-    interviews = interviews.filter(item => item.title !== title)
-    rejected=rejected.filter(item => item.title!==title)
-    
+    interviews = interviews.filter((item) => item.title !== title)
+    rejected = rejected.filter((item) => item.title !== title)
+
     updateCounts()
 
     interviewCount.innerText = interviews.length
@@ -225,50 +221,17 @@ function deleteJob(card) {
 
     // remove DOM card
     card.remove()
-  
-    if(activeFilter === 'interview') {
-        if(interviews.length === 0) {
+
+    if (activeFilter === 'interview') {
+        if (interviews.length === 0) {
             showEmptyCard()
         } else {
             renderJob('interview')
         }
     }
 
-    if(activeFilter === 'rejected') {
-        if(rejected.length === 0) {
-            showEmptyCard()
-        } else {
-            renderJob('rejected')
-        }
-    }
-}
-
-function deleteJob(card) {
-
-    const title = card.querySelector('.title').innerText
-
-    // remove from both arrays
-    interviews = interviews.filter(item => item.title !== title)
-    rejected=rejected.filter(item => item.title!==title)
-    
-    updateCounts()
-
-    interviewCount.innerText = interviews.length
-    rejectedCount.innerText = rejected.length
-
-    // remove DOM card
-    card.remove()
-  
-    if(activeFilter === 'interview') {
-        if(interviews.length === 0) {
-            showEmptyCard()
-        } else {
-            renderJob('interview')
-        }
-    }
-
-    if(activeFilter === 'rejected') {
-        if(rejected.length === 0) {
+    if (activeFilter === 'rejected') {
+        if (rejected.length === 0) {
             showEmptyCard()
         } else {
             renderJob('rejected')
@@ -282,9 +245,9 @@ function updateCounts() {
     interviewCount.innerText = interviews.length
     rejectedCount.innerText = rejected.length
 
-    if(activeFilter === 'interview') {
+    if (activeFilter === 'interview') {
         jobs.innerText = interviews.length + ' of ' + jobsLength + ' jobs'
-    } else if(activeFilter === 'rejected') {
+    } else if (activeFilter === 'rejected') {
         jobs.innerText = rejected.length + ' of ' + jobsLength + ' jobs'
     } else {
         jobs.innerText = jobsLength + ' jobs'
