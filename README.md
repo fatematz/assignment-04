@@ -12,20 +12,20 @@
 
 ---
 
-## 2. How do you create and insert a new element into the DOM?
+# 2. How do you create and insert a new element into the DOM?
 
 
 **To create and insert a new element into the DOM, we use JavaScript methods..
 
-- Create element → createElement()
+- Create element -> createElement()
 
-- Add text → innerText
+- Add text -> innerText
 
-- Insert into DOM → appendChild() / append()
+- Insert into DOM -> appendChild() / append()
 
 ---
 
-## 3. What is Event Bubbling? And how does it work?
+# 3. What is Event Bubbling? And how does it work?
 
 **Event Bubbling is a DOM behavior where an event on a child element automatically moves up to its parent elements.  
 
@@ -39,13 +39,13 @@
 
 
 
-## 4. What is Event Delegation in JavaScript? Why is it useful?
+# 4. What is Event Delegation in JavaScript? Why is it useful?
 
 - Event Delegation is a technique in JavaScript where a single event listener is added to a parent element to handle events on its child elements. It is useful because it saves memory, improves performance, and works even for child elements that are added dynamically. 
 
 ---
 
-### 5. What is the difference between preventDefault() and stopPropagation() methods?
+# 5. What is the difference between preventDefault() and stopPropagation() methods?
 
 **The difference between preventDefault() and stopPropagation() is that they are used to control events in different ways.
 
