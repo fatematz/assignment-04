@@ -119,6 +119,11 @@ function updateJobStatus(card, cardStatus) {
         build,
     }
 
+    // new 
+    const interviewBtn = card.querySelector('.interview-btn')
+const rejectedBtn = card.querySelector('.rejected-btn')
+
+
     interviews = interviews.filter((item) => item.title !== title)
     rejected = rejected.filter((item) => item.title !== title)
 
@@ -128,6 +133,10 @@ function updateJobStatus(card, cardStatus) {
         card.querySelector('.status-1').innerText = 'interview'
         // renderJob('interview')
 
+        // new 
+          interviewBtn.classList.add('bg-green-500', 'text-white')
+    rejectedBtn.classList.remove('bg-red-500', 'text-white')
+
         updateCounts()
     }
 
@@ -136,6 +145,10 @@ function updateJobStatus(card, cardStatus) {
         rejectedCount.innerText = rejected.length
         card.querySelector('.status-1').innerText = 'rejected'
         // renderJob('rejected' )
+
+        // new 
+        rejectedBtn.classList.add('bg-red-500', 'text-white')
+    interviewBtn.classList.remove('bg-green-500', 'text-white')
 
         updateCounts()
     }
@@ -225,6 +238,10 @@ function deleteJob(card) {
 
     // remove DOM card
     card.remove()
+
+    jobsLength=allCardSection.children.length
+    
+    updateCounts()
 
     if (activeFilter === 'interview') {
         if (interviews.length === 0) {
