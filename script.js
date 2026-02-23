@@ -26,7 +26,7 @@ const interviewFilterBtn = document.getElementById('interviewBtn')
 const rejectedFilterBtn = document.getElementById('rejectedBtn')
 
 function showEmptyCard() {
-    const emptyCard = `<div class="empty-card"><img src="./jobs.png"/><h3>No jobs available</h3><p>Check back soon for new job opportunities</p></div>`
+    const emptyCard = `<div class="empty-card py-10 flex flex-col items-center justify-center  bg-gray-100 "><img src="./jobs.png"/><h3>No jobs available</h3><p>Check back soon for new job opportunities</p></div>`
     document.getElementById('filtered-section').innerHTML = emptyCard
 }
 
