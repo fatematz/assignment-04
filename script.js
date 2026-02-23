@@ -23,7 +23,8 @@ countTotal()
 
 const allFilterBtn = document.getElementById('allBtn')
 const interviewFilterBtn = document.getElementById('interviewBtn')
-const rejectedFilterBtn = document.getElementById('rejectedBtn')
+const rejectedFilterBtn=document.getElementById('rejectedBtn')
+
 
 function showEmptyCard() {
     const emptyCard = `<div class="empty-card py-10 flex flex-col items-center justify-center  bg-gray-100 "><img src="./jobs.png"/><h3>No jobs available</h3><p>Check back soon for new job opportunities</p></div>`
@@ -37,14 +38,17 @@ function toggleStyle(id) {
     interviewFilterBtn.classList.remove('bg-blue-500', 'text-white')
     rejectedFilterBtn.classList.remove('bg-blue-500', 'text-white')
 
+ 
     allFilterBtn.classList.add('bg-gray-500', 'text-white')
     interviewFilterBtn.classList.add('bg-gray-500', 'text-white')
     rejectedFilterBtn.classList.add('bg-gray-500', 'text-white')
+
 
     let selected = document.getElementById(id)
 
     selected.classList.remove('bg-gray-500', 'text-white')
     selected.classList.add('bg-black', 'text-white')
+
     // selected.addEventListener
 
     if (id == 'interviewBtn') {
